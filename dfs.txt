@@ -1,0 +1,153 @@
+6................................................DFS
+
+
+
+
+
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(start)
+
+    print(start)
+  
+
+    for next in graph[start]:
+      if(next not in visited):
+        dfs(graph, next, visited)
+    return visited
+
+graph = {'0': set(['1', '2']),
+         '1': set(['0', '3', '5']),
+         '2': set(['0','4']),
+         '3': set(['1']),
+         '4': set(['2']),
+         '5': set(['1']),
+         }
+
+dfs(graph, '0')
+
+from collections import defaultdict
+ 
+# This class represents a directed graph using
+# adjacency list representation
+ 
+ 
+class Graph:
+ 
+    # Constructor
+    def __init__(self):
+ 
+        # default dictionary to store graph
+        self.graph = defaultdict(list)
+ 
+    # function to add an edge to graph
+    def addEdge(self, u, v):
+        self.graph[u].append(v)
+ 
+    # A function used by DFS
+    def DFSUtil(self, v, visited):
+ 
+        # Mark the current node as visited
+        # and print it
+        visited.add(v)
+        print(v, end=' ')
+ 
+        # Recur for all the vertices
+        # adjacent to this vertex
+        for neighbour in self.graph[v]:
+            if neighbour not in visited:
+                self.DFSUtil(neighbour, visited)
+ 
+    # The function to do DFS traversal. It uses
+    # recursive DFSUtil()
+    def DFS(self, v):
+ 
+        # Create a set to store visited vertices
+        visited = set()
+ 
+        # Call the recursive helper function
+        # to print DFS traversal
+        self.DFSUtil(v, visited)
+ 
+# Driver code
+ 
+ 
+# Create a graph given
+# in the above diagram
+g = Graph()
+g.addEdge(0, 1)
+g.addEdge(0, 2)
+g.addEdge(1, 2)
+g.addEdge(2, 0)
+g.addEdge(2, 3)
+g.addEdge(3, 3)
+ 
+print("Following is DFS from (starting from vertex 2)")
+g.DFS(2)
+graph = {
+  '0' : ['1','2'],
+  '1' : ['2'],
+  '2' : ['0','3'],
+  '3' : ['3']
+}
+
+visited = set() # Set to keep track of visited nodes of graph.
+
+def dfs(visited, graph, node):  #function for dfs 
+    if node not in visited:
+        print (node)
+        visited.add(node)
+        for neighbour in graph[node]:
+            dfs(visited, graph, neighbour)
+
+# Driver Code
+print("Following is the Depth-First Search")
+
+dfs(visited, graph, '2')
+graph = {
+    'A':['B','C'],
+    'B':['D','E'],
+    'C':['F','G'],
+    'D':['H','I'],
+    'E':['J','K'],
+    'F':['L','M'],
+    'G':['N','O'],
+    'H':[],
+    'I':[],
+    'J':[],
+    'K':[],
+    'L':[],
+    'M':[],
+    'N':[],
+    'O':[]
+}
+
+def DLS(start,goal,path,level,maxD):
+  print('\nCurrent level-->',level)
+  print('Goal node testing for',start)
+  path.append(start)
+  if start == goal:
+    print("Goal test successful")
+    return path
+  print('Goal node testing failed')
+  if level==maxD:
+    return False
+  print('\nExpanding the current node',start)
+  for child in graph[start]:
+    if DLS(child,goal,path,level+1,maxD):
+      return path
+    path.pop()
+  return False
+
+start = 'A'
+goal = input('Enter the goal node:-')
+maxD = int(input("Enter the maximum depth limit:-"))
+print()
+path = list()
+res = DLS(start,goal,path,0,maxD)
+if(res):
+    print("Path to goal node available")
+    print("Path",path)
+else:
+    print("No path available for the goal node in given depth limit")
